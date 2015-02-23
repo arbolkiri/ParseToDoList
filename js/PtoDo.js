@@ -56,8 +56,9 @@
             },
             addTask: function(event) {
                 event.preventDefault();
+                debugger;
                 var data = {
-                    description: this.el.querySelector('input').value
+                    description: this.el.querySelector("input[name= 'John']").value
                 }
                 this.collection.create(data, {
                     validate: true
@@ -100,7 +101,7 @@
             }
         })
         Parse.TaskModel = Parse.Object.extend({
-            className: "Task",
+            className: "description",
             defaults: {
                 isDone: false,
                 urgent: false,
@@ -115,7 +116,7 @@
             }
         })
         Parse.TodoActualList = Parse.Collection.extend({
-                model: Parse.Task,
+                model: Parse.TaskModel,
                 comparator: function(a, b) { //this is to alphabetize the list
                     if (a.get('urgent') && !b.get('urgent') || !a.get('isDone') && b.get('isDone'))
                         return -1;
@@ -125,8 +126,7 @@
                     return a.get('description') > b.get('description') ? 1 : -1;
                 }
         })
-
-
+        var todos =  new Parse.TodoActualList();
 
 })(typeof module === "object" ? module.exports : window)
 
